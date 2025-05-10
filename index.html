@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrimonios de Nazaret - Playeras</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <div class="logo-container">
+                    <div class="logo-circle">
+                        <i class="fas fa-tshirt logo-icon"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>Matrimonios de Nazaret</h1>
+                        <p>Venta de Playeras 2023</p>
+                    </div>
+                </div>
+                <div class="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="app-main">
+            <!-- Form Section -->
+            <section class="form-section card">
+                <h2 class="section-title">
+                    <i class="fas fa-plus-circle"></i> Nueva Compra
+                </h2>
+                <form id="compraForm" class="form-container">
+                    <div class="form-group floating">
+                        <input type="text" id="nombre" required placeholder=" ">
+                        <label for="nombre">Nombre del Comprador</label>
+                        <i class="fas fa-user form-icon"></i>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group floating select-group">
+                            <select id="talla" required>
+                                <option value=""></option>
+                                <option value="EXTRA CHICA">EXTRA CHICA (ECH)</option>
+                                <option value="CHICA">CHICA (CH)</option>
+                                <option value="MEDIANA">MEDIANA (M)</option>
+                                <option value="GRANDE">GRANDE (G)</option>
+                                <option value="EXTRA GRANDE">EXTRA GRANDE (EG)</option>
+                                <option value="EXTRA EXTRA GRANDE">EXTRA EXTRA GRANDE (EEG)</option>
+                            </select>
+                            <label for="talla">Talla</label>
+                            <i class="fas fa-ruler-vertical form-icon"></i>
+                        </div>
+
+                        <div class="form-group floating select-group">
+                            <select id="genero" required>
+                                <option value=""></option>
+                                <option value="Hombre">Hombre</option>
+                                <option value="Mujer">Mujer</option>
+                            </select>
+                            <label for="genero">Género</label>
+                            <i class="fas fa-venus-mars form-icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group floating">
+                        <input type="number" id="abono" min="0" max="200" value="0" step="10" required placeholder=" ">
+                        <label for="abono">Abono Inicial ($)</label>
+                        <i class="fas fa-dollar-sign form-icon"></i>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Guardar
+                        </button>
+                        <button type="reset" class="btn btn-secondary">
+                            <i class="fas fa-eraser"></i> Limpiar
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Records Section -->
+            <section class="records-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-list"></i> Registros
+                    </h2>
+                    <div class="filters-container">
+                        <div class="filter-group">
+                            <div class="filter-select floating">
+                                <select id="filtroGenero">
+                                    <option value="">Todos los géneros</option>
+                                    <option value="Hombre">Hombre</option>
+                                    <option value="Mujer">Mujer</option>
+                                </select>
+                                <label>Filtrar por género</label>
+                            </div>
+                        </div>
+                        <div class="filter-group">
+                            <div class="filter-select floating">
+                                <select id="filtroTalla">
+                                    <option value="">Todas las tallas</option>
+                                    <option value="EXTRA CHICA">EXTRA CHICA</option>
+                                    <option value="CHICA">CHICA</option>
+                                    <option value="MEDIANA">MEDIANA</option>
+                                    <option value="GRANDE">GRANDE</option>
+                                    <option value="EXTRA GRANDE">EXTRA GRANDE</option>
+                                    <option value="EXTRA EXTRA GRANDE">EXTRA EXTRA GRANDE</option>
+                                </select>
+                                <label>Filtrar por talla</label>
+                            </div>
+                        </div>
+                        <button id="generarPDF" class="btn btn-pdf">
+                            <i class="fas fa-file-pdf"></i> PDF
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Summary Table -->
+                <div class="summary-table card">
+                    <h3 class="summary-title">
+                        <i class="fas fa-table"></i> Resumen de Tallas
+                    </h3>
+                    <div class="table-responsive">
+                        <table id="summaryTable">
+                            <thead>
+                                <tr>
+                                    <th>Talla</th>
+                                    <th><i class="fas fa-mars"></i> Hombre</th>
+                                    <th><i class="fas fa-venus"></i> Mujer</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="summaryBody">
+                                <!-- Resumen se cargará aquí -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Totals Cards -->
+                <div class="totals-container">
+                    <div class="total-card">
+                        <div class="total-icon">
+                            <i class="fas fa-tshirt"></i>
+                        </div>
+                        <div class="total-info">
+                            <span class="total-label">Playeras</span>
+                            <span class="total-value" id="totalPlayeras">0</span>
+                        </div>
+                    </div>
+                    <div class="total-card">
+                        <div class="total-icon">
+                            <i class="fas fa-hand-holding-usd"></i>
+                        </div>
+                        <div class="total-info">
+                            <span class="total-label">Abonado</span>
+                            <span class="total-value" id="totalAbonado">$0.00</span>
+                        </div>
+                    </div>
+                    <div class="total-card">
+                        <div class="total-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="total-info">
+                            <span class="total-label">Pendiente</span>
+                            <span class="total-value" id="totalPendiente">$0.00</span>
+                        </div>
+                    </div>
+                    <div class="total-card">
+                        <div class="total-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <div class="total-info">
+                            <span class="total-label">Total</span>
+                            <span class="total-value" id="totalAPagar">$0.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Records Table -->
+                <div class="table-container card">
+                    <div class="table-responsive">
+                        <table id="registrosTable">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nombre</th>
+                                    <th>Talla</th>
+                                    <th>Género</th>
+                                    <th>Abonado</th>
+                                    <th>Restante</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="registrosBody">
+                                <!-- Registros se cargarán aquí -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>Sistema de Registro de Playeras &copy; <span id="currentYear"></span></p>
+        </footer>
+
+        <!-- Edit Modal -->
+        <div id="editarModal" class="modal">
+            <div class="modal-content card">
+                <span class="close-modal">&times;</span>
+                <h3 class="modal-title">
+                    <i class="fas fa-edit"></i> Editar Registro
+                </h3>
+                <form id="editarForm" class="form-container">
+                    <input type="hidden" id="editarId">
+                    <div class="form-group floating">
+                        <input type="text" id="editarNombre" required placeholder=" ">
+                        <label for="editarNombre">Nombre del Comprador</label>
+                        <i class="fas fa-user form-icon"></i>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group floating select-group">
+                            <select id="editarTalla" required>
+                                <option value="EXTRA CHICA">EXTRA CHICA</option>
+                                <option value="CHICA">CHICA</option>
+                                <option value="MEDIANA">MEDIANA</option>
+                                <option value="GRANDE">GRANDE</option>
+                                <option value="EXTRA GRANDE">EXTRA GRANDE</option>
+                                <option value="EXTRA EXTRA GRANDE">EXTRA EXTRA GRANDE</option>
+                            </select>
+                            <label for="editarTalla">Talla</label>
+                            <i class="fas fa-ruler-vertical form-icon"></i>
+                        </div>
+                        <div class="form-group floating select-group">
+                            <select id="editarGenero" required>
+                                <option value="Hombre">Hombre</option>
+                                <option value="Mujer">Mujer</option>
+                            </select>
+                            <label for="editarGenero">Género</label>
+                            <i class="fas fa-venus-mars form-icon"></i>
+                        </div>
+                    </div>
+                    <div class="form-group floating">
+                        <input type="number" id="editarAbono" min="0" max="200" required placeholder=" ">
+                        <label for="editarAbono">Total Abonado ($)</label>
+                        <i class="fas fa-dollar-sign form-icon"></i>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Guardar Cambios
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Notification -->
+        <div id="notification" class="notification"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/parse/dist/parse.min.js"></script>
+    <script src="scripts/app.js"></script>
+</body>
+</html>
