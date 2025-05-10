@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrimonios de Nazaret - Registro de Playeras</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <img src="https://via.placeholder.com/100x100?text=MN" alt="Logo Matrimonios de Nazaret" class="logo">
+                <h1>Compra de Playeras <span>"Matrimonios de Nazaret"</span></h1>
+            </div>
+        </header>
+
+        <main>
+            <section class="form-section">
+                <h2>Registrar Nueva Compra</h2>
+                <form id="compraForm">
+                    <div class="form-group">
+                        <label for="nombre">Nombre del Comprador:</label>
+                        <input type="text" id="nombre" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="talla">Talla:</label>
+                            <select id="talla" required>
+                                <option value="">Seleccione...</option>
+                                <option value="EXTRA CHICA">ECH</option>
+                                <option value="CHICA">CH</option>
+                                <option value="MEDIANA">M</option>
+                                <option value="GRANDE">G</option>
+                                <option value="EXTRA GRANDE">EG</option>
+                                <option value="EXTRA EXTRA GRANDE">EEG</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="genero">Género:</label>
+                            <select id="genero" required>
+                                <option value="">Seleccione...</option>
+                                <option value="Hombre">Hombre</option>
+                                <option value="Mujer">Mujer</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="abono">Abono Inicial ($):</label>
+                        <input type="number" id="abono" min="0" max="200" value="0" required>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Guardar
+                        </button>
+                        <button type="reset" class="btn btn-secondary">
+                            <i class="fas fa-undo"></i> Limpiar
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <section class="registros-section">
+                <div class="section-header">
+                    <h2>Registros de Compras</h2>
+                    <div class="filtros-container">
+                        <div class="filtros-row">
+                            <div class="form-group filtro-group">
+                                <label for="filtroGenero">Filtrar por Género:</label>
+                                <select id="filtroGenero">
+                                    <option value="">Todos</option>
+                                    <option value="Hombre">Hombre</option>
+                                    <option value="Mujer">Mujer</option>
+                                </select>
+                            </div>
+                            <div class="form-group filtro-group">
+                                <label for="filtroTalla">Filtrar por Talla:</label>
+                                <select id="filtroTalla">
+                                    <option value="">Todas</option>
+                                    <option value="EXTRA CHICA">ECH</option>
+                                    <option value="CHICA">CH</option>
+                                    <option value="MEDIANA">M</option>
+                                    <option value="GRANDE">G</option>
+                                    <option value="EXTRA GRANDE">EG</option>
+                                    <option value="EXTRA EXTRA GRANDE">EEG</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button id="generarPDF" class="btn btn-pdf">
+                            <i class="fas fa-file-pdf"></i> Generar PDF
+                        </button>
+                    </div>
+                </div>
+
+                <div class="resumen-tallas">
+                    <h3>Resumen de Tallas por Género</h3>
+                    <div class="tallas-container">
+                        <div class="tallas-column">
+                            <h4>Hombre</h4>
+                            <div id="tallasHombre" class="tallas-list"></div>
+                        </div>
+                        <div class="tallas-column">
+                            <h4>Mujer</h4>
+                            <div id="tallasMujer" class="tallas-list"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="resumen-total">
+                    <div class="total-box">
+                        <span class="total-label">Total Abonado:</span>
+                        <span class="total-value" id="totalAbonado">$0.00</span>
+                    </div>
+                    <div class="total-box">
+                        <span class="total-label">Total Pendiente:</span>
+                        <span class="total-value" id="totalPendiente">$0.00</span>
+                    </div>
+                    <div class="total-box">
+                        <span class="total-label">Total Playeras:</span>
+                        <span class="total-value" id="totalPlayeras">0</span>
+                    </div>
+                    <div class="total-box">
+                        <span class="total-label">Total a Pagar:</span>
+                        <span class="total-value" id="totalAPagar">$0.00</span>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table id="registrosTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nombre</th>
+                                <th>Talla</th>
+                                <th>Género</th>
+                                <th>Abonado</th>
+                                <th>Restante</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="registrosBody">
+                            <!-- Los registros se cargarán aquí dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Sistema de Registro de Playeras - Matrimonios de Nazaret &copy; 2023</p>
+        </footer>
+    </div>
+
+    <!-- Modal para editar registro -->
+    <div id="editarModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>Editar Registro</h3>
+            <form id="editarForm">
+                <input type="hidden" id="editarId">
+                <div class="form-group">
+                    <label for="editarNombre">Nombre del Comprador:</label>
+                    <input type="text" id="editarNombre" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editarTalla">Talla:</label>
+                        <select id="editarTalla" required>
+                            <option value="EXTRA CHICA">ECH</option>
+                            <option value="CHICA">CH</option>
+                            <option value="MEDIANA">M</option>
+                            <option value="GRANDE">G</option>
+                            <option value="EXTRA GRANDE">EG</option>
+                            <option value="EXTRA EXTRA GRANDE">EEG</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editarGenero">Género:</label>
+                        <select id="editarGenero" required>
+                            <option value="Hombre">Hombre</option>
+                            <option value="Mujer">Mujer</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="editarAbono">Total Abonado ($):</label>
+                    <input type="number" id="editarAbono" min="0" max="200" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/parse/dist/parse.min.js"></script>
+    <script src="scripts/app.js"></script>
+</body>
+</html>
